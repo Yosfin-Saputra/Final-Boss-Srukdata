@@ -1,8 +1,10 @@
 #include "lib/main_func.h"
 
 
-void dosen();
+void dosenSign();
 void mhs();
+void dosen();
+void editKls();
 
 
 int main(){
@@ -25,7 +27,7 @@ int main(){
 		
 		switch(pil){
 			case 1:
-				dosen();
+				dosenSign();
 				break;
 			case 2:
 				mhs();
@@ -42,7 +44,7 @@ int main(){
 	return 0;
 }
 
-void dosen(){
+void dosenSign(){
 	int pil;
 	
 	do{
@@ -62,7 +64,8 @@ void dosen(){
 		
 		switch(pil){
 			case 1:
-					
+				
+				dosen();
 				break;
 			case 2:
 					
@@ -78,7 +81,8 @@ void dosen(){
 }
 
 void mhs(){
-	int pil;
+	int pil,lanjut=1;
+	
 	do{
 		system("cls");
 		
@@ -99,7 +103,8 @@ void mhs(){
 					
 				break;
 			case 2:
-					
+				
+				lanjut=next();	
 				break;
 			case 3:
 					
@@ -108,5 +113,94 @@ void mhs(){
 				break;
 		}
 		
-	}while(pil!=3);	
+	}while(pil!=3 && lanjut==1);	
+}
+
+void dosen(){
+	int pil,lanjut=1;
+	
+	do{
+		system("cls");
+		
+		latar();
+		printf("============================================================\n");
+		printf("                      MENU DOSEN\n");
+		printf("============================================================\n");
+		printf("--> 1. Buat Kelas\n");
+		printf("--> 2. Edit Kelas\n");
+		printf("--> 3. Lihat Kelas\n");
+		printf("--> 4. Hapus Kelas\n");
+		printf("--> 5. Kembali\n");
+		printf("============================================================\n");
+		printf("--> Pilih menu : ");
+		scanf("%d",&pil);
+		printf("============================================================\n");
+		
+		switch(pil){
+			case 1:
+				
+				break;
+			case 2:
+				
+				editKls();
+				break;
+			case 3:
+				
+				lanjut=next();
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			default:
+				break;
+		}
+		
+	}while(pil!=5 && lanjut==1 );
+}
+
+void editKls(){
+	int pil,lanjut=1;
+	
+	do{
+		system("cls");
+		
+		latar();
+		printf("============================================================\n");
+		printf("                      MENU DOSEN\n");
+		printf("============================================================\n");
+		printf("                      EDIT KELAS\n");
+		printf("============================================================\n");
+		printf("--> 1. Ganti ID\n");
+		printf("--> 2. Ganti Password\n");
+		printf("--> 3. Ganti Nama dan Keterangan\n");
+		printf("--> 4. Lihat Tampilan Kelas\n");
+		printf("--> 5. Kembali\n");
+		printf("============================================================\n");
+		printf("--> Pilih menu : ");
+		scanf("%d",&pil);
+		printf("============================================================\n");
+		
+		switch(pil){
+			case 1:
+				
+				break;
+			case 2:
+					
+				break;
+			case 3:
+				
+				
+				break;
+			case 4:
+				
+				lanjut=next();
+				break;
+			case 5:
+				break;
+			default:
+				break;
+		}
+		
+	}while(pil!=5 && lanjut==1 );
 }
