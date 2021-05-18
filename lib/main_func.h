@@ -6,6 +6,8 @@
 #include <time.h>
 #include <string.h>
 
+#define CETAK "./db_cetak/absen.txt"
+
 int next();
 void latar(); 
 

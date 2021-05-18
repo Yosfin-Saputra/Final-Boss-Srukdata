@@ -1,4 +1,5 @@
 #include "lib/main_func.h"
+#include "lib/check_func.h"
 
 
 void dosenSign();
@@ -10,6 +11,8 @@ void lihatKls();
 
 int main(){
 	int pil;
+	
+	checkDirect();
 	
 	do{
 		system("cls");
