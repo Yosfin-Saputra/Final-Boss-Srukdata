@@ -5,6 +5,7 @@ void dosenSign();
 void mhs();
 void dosen();
 void editKls();
+void lihatKls();
 
 
 int main(){
@@ -146,7 +147,7 @@ void dosen(){
 				break;
 			case 3:
 				
-				lanjut=next();
+				lihatKls();
 				break;
 			case 4:
 				break;
@@ -203,4 +204,46 @@ void editKls(){
 		}
 		
 	}while(pil!=5 && lanjut==1 );
+}
+
+void lihatKls(){
+	int pil,lanjut=1;
+	
+	do{
+		system("cls");
+		
+		latar();
+		printf("============================================================\n");
+		printf("                      MENU DOSEN\n");
+		printf("============================================================\n");
+		printf("                      LIHAT KELAS\n");
+		printf("============================================================\n");
+		printf("--> 1. Lihat Absensi\n");
+		printf("--> 2. Edit Absensi\n");
+		printf("--> 3. Cetak Absensi\n");
+		printf("--> 4. Kembali\n");
+		printf("============================================================\n");
+		printf("--> Pilih menu : ");
+		scanf("%d",&pil);
+		printf("============================================================\n");
+		
+		switch(pil){
+			case 1:
+				
+				lanjut=next();
+				break;
+			case 2:
+					
+				break;
+			case 3:
+				
+				lanjut=next();
+				break;
+			case 4:
+				break;
+			default:
+				break;
+		}
+		
+	}while(pil!=4 && lanjut==1 );
 }
