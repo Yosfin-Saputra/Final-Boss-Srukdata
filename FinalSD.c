@@ -1,18 +1,21 @@
 #include "lib/main_func.h"
 #include "lib/check_func.h"
+#include "lib/kls_func.h"
 
 
 void dosenSign();
 void mhs();
 void dosen();
-void editKls();
-void lihatKls();
+void editKls(struct Kls *bantu);
+void lihatKls(struct Kls *bantu);
+void cekId();
 
 
 int main(){
 	int pil;
 	
 	checkDirect();
+//	isi();
 	
 	do{
 		system("cls");
@@ -108,7 +111,7 @@ void mhs(){
 				break;
 			case 2:
 				
-				lanjut=next();	
+				lanjut=next(1);	
 				break;
 			case 3:
 					
@@ -131,10 +134,9 @@ void dosen(){
 		printf("                      MENU DOSEN\n");
 		printf("============================================================\n");
 		printf("--> 1. Buat Kelas\n");
-		printf("--> 2. Edit Kelas\n");
-		printf("--> 3. Lihat Kelas\n");
-		printf("--> 4. Hapus Kelas\n");
-		printf("--> 5. Kembali\n");
+		printf("--> 2. Edit dan Lihat Kelas\n");
+		printf("--> 3. Lihat Absensi Kelas\n");
+		printf("--> 4. Kembali\n");
 		printf("============================================================\n");
 		printf("--> Pilih menu : ");
 		scanf("%d",&pil);
@@ -142,28 +144,26 @@ void dosen(){
 		
 		switch(pil){
 			case 1:
-				
+				buatKls();
 				break;
 			case 2:
 				
-				editKls();
+				cekId(1);
 				break;
 			case 3:
 				
-				lihatKls();
+				cekId(2);
 				break;
 			case 4:
-				break;
-			case 5:
 				break;
 			default:
 				break;
 		}
 		
-	}while(pil!=5 && lanjut==1 );
+	}while(pil!=4 && lanjut==1 );
 }
 
-void editKls(){
+void editKls(struct Kls *bantu){
 	int pil,lanjut=1;
 	
 	do{
@@ -173,13 +173,12 @@ void editKls(){
 		printf("============================================================\n");
 		printf("                      MENU DOSEN\n");
 		printf("============================================================\n");
-		printf("                      EDIT KELAS\n");
+		printf("                 EDIT DAN LIHAT KELAS\n");
 		printf("============================================================\n");
-		printf("--> 1. Ganti ID\n");
-		printf("--> 2. Ganti Password\n");
-		printf("--> 3. Ganti Nama dan Keterangan\n");
-		printf("--> 4. Lihat Tampilan Kelas\n");
-		printf("--> 5. Kembali\n");
+		printf("--> 1. Edit Kelas\n");
+		printf("--> 2. Lihat Tampilan Kelas\n");
+		printf("--> 3. Hapus Kelas\n");
+		printf("--> 4. Kembali\n");
 		printf("============================================================\n");
 		printf("--> Pilih menu : ");
 		scanf("%d",&pil);
@@ -187,29 +186,29 @@ void editKls(){
 		
 		switch(pil){
 			case 1:
-				
+				bantu=modifKls(bantu);
 				break;
 			case 2:
-					
+				viewKls(bantu);
+				lanjut=next(1);
 				break;
 			case 3:
-				
-				
+				lanjut=next(3);
+				if(lanjut==1){
+					delKls(bantu);
+					lanjut=0;
+				}
 				break;
 			case 4:
-				
-				lanjut=next();
-				break;
-			case 5:
 				break;
 			default:
 				break;
 		}
 		
-	}while(pil!=5 && lanjut==1 );
+	}while(pil!=4 && lanjut==1 );
 }
 
-void lihatKls(){
+void lihatKls(struct Kls *bantu){
 	int pil,lanjut=1;
 	
 	do{
@@ -219,7 +218,7 @@ void lihatKls(){
 		printf("============================================================\n");
 		printf("                      MENU DOSEN\n");
 		printf("============================================================\n");
-		printf("                      LIHAT KELAS\n");
+		printf("                 LIHAT ABSENSI KELAS\n");
 		printf("============================================================\n");
 		printf("--> 1. Lihat Absensi\n");
 		printf("--> 2. Edit Absensi\n");
@@ -233,14 +232,14 @@ void lihatKls(){
 		switch(pil){
 			case 1:
 				
-				lanjut=next();
+				lanjut=next(1);
 				break;
 			case 2:
 					
 				break;
 			case 3:
 				
-				lanjut=next();
+				lanjut=next(1);
 				break;
 			case 4:
 				break;
@@ -249,4 +248,31 @@ void lihatKls(){
 		}
 		
 	}while(pil!=4 && lanjut==1 );
+}
+
+void cekId(int n){
+	int a,temu;
+	struct Kls *bantu;
+	menu:
+	system("cls");
+	
+	latar();
+	printf("============================================================\n");
+	printf("                       CEK ID KELAS\n");
+	printf("============================================================\n");
+	printf("-->ID Kelas   : ");   
+	scanf("%d",&a);
+	temu=cariTes(a);
+	if(temu==1){
+		bantu=cariKls(a);
+		printf("============================================================\n");
+		if(n==1) editKls(bantu);
+		else lihatKls(bantu);
+	}else{
+		printf("-->Maaf, ID tidak ditemukan\n");
+		printf("============================================================\n");
+		temu=next(2);
+		if(temu==1) goto menu;
+		else return;
+	}
 }
