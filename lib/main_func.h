@@ -6,4 +6,6 @@
 #include <time.h>
 #include <string.h>
 
+void latar(); 
+
 #endif
