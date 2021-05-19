@@ -1,10 +1,11 @@
 #include "lib/main_func.h"
 #include "lib/check_func.h"
 #include "lib/kls_func.h"
+#include "lib/absen_func.h"
 
 
 void dosenSign();
-void mhs();
+void menuMhs();
 void dosen();
 void editKls(struct Kls *bantu);
 void lihatKls(struct Kls *bantu);
@@ -37,7 +38,7 @@ int main(){
 				dosenSign();
 				break;
 			case 2:
-				mhs();
+				menuMhs();
 				break;
 			case 3:
 				
@@ -87,7 +88,7 @@ void dosenSign(){
 	}while(pil!=3);
 }
 
-void mhs(){
+void menuMhs(){
 	int pil,lanjut=1;
 	
 	do{
@@ -107,10 +108,11 @@ void mhs(){
 		
 		switch(pil){
 			case 1:
-					
+				cekId(3);
+				lanjut=next(1);	
 				break;
 			case 2:
-				
+				adaKls();
 				lanjut=next(1);	
 				break;
 			case 3:
@@ -236,7 +238,7 @@ void lihatKls(struct Kls *bantu){
 		
 		switch(pil){
 			case 1:
-				
+				lihatAbsen(bantu->mhs);
 				lanjut=next(1);
 				break;
 			case 2:
@@ -257,6 +259,7 @@ void lihatKls(struct Kls *bantu){
 
 void cekId(int n){
 	int a,temu;
+	char pass[20];
 	struct Kls *bantu;
 	menu:
 	system("cls");
@@ -265,19 +268,32 @@ void cekId(int n){
 	printf("============================================================\n");
 	printf("                       CEK ID KELAS\n");
 	printf("============================================================\n");
-	printf("-->ID Kelas   : ");   
+	printf("-->ID Kelas : ");   
 	scanf("%d",&a);
 	temu=cariTes(a);
 	if(temu==1){
+		printf("-->Password : ");
+		fflush(stdin);
+		scanf("%[^\n]s",pass);
 		bantu=cariKls(a);
-		printf("============================================================\n");
-		if(n==1) editKls(bantu);
-		else lihatKls(bantu);
+		temu=strcmp(pass,bantu->pass);
+		
+		if(temu==0){
+			printf("============================================================\n");
+			if(n==1) editKls(bantu);
+			else if(n==2) lihatKls(bantu);
+			else absenMhs(bantu);
+			return;
+		}else{
+			printf("-->Maaf, password salah\n");
+			printf("============================================================\n");
+		}
+		
 	}else{
 		printf("-->Maaf, ID tidak ditemukan\n");
 		printf("============================================================\n");
-		temu=next(2);
-		if(temu==1) goto menu;
-		else return;
 	}
+	temu=next(2);
+	if(temu==1) goto menu;
+	else return;
 }

@@ -11,31 +11,30 @@
 #define CETAK "./db_cetak/absen.txt"
 #define KLS "./db_kls/kelas.txt"
 
-//struct List{
-//	int nim;
-//	char nama[50];
-//	char kls;
-//	struct List *next;
-//	struct List *prev;
-//};
-//
+struct List{
+	int nim;
+	char nama[50];
+	char kls;
+	struct List *next;
+	struct List *prev;
+};
+
 struct Kls{
 	int id;
 	char nam[20];
 	char ket[200];
 	char pass[20];
 	struct Kls *next;
-//	struct List *mhs;
+	struct List *mhs;
 };
 
 struct Kls ada[10];
 
 int next();
 void latar();
-//void addMhs(int nim, char nama[],char kls, struct List *mhs);
-//void addKls(int id,char nama[],char ket[],char pass[],int index);
-void openHash(int id,char nama[],char ket[],char pass[]);
-//void cari(int id,int nim,char nama[],char kls);
+void addMhs(char name[],int ni,char kl,struct Kls *m);
+void addKls(int i,char name[],char kt[],char pas[],int index);
+void openHash(int i,char name[],char kt[],char pas[]);
 int cariTes(int i);
 struct Kls *cariKls(int i);
 

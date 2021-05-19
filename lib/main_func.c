@@ -19,23 +19,24 @@ int next(int n){
 	else return 0;
 }
 
-//void addMhs(int nim,char nama[],char kls,struct List *m){
-//	struct List *baru;
-//	baru=(struct List*)malloc(sizeof(struct List));
-//	baru->nim=nim;
-//	strcpy(baru->nama,nama);
-//	baru->kls=kls;
-//	baru->next=0;
-//	baru->prev=0;
-//	if(m==0){
-//		baru=m;
-//	}else{
-//		m->next=baru;
-//		baru->prev=m;
-//	}
-//	
-//}
-//
+void addMhs(char name[],int ni,char kl,struct Kls *m){
+	struct List *baru,*bantu;
+	baru=(struct List*)malloc(sizeof(struct List));
+	baru->nim=ni;
+	strcpy(baru->nama,name);
+	baru->kls=kl;
+	baru->next=NULL;
+	baru->prev=NULL;
+	if(m->mhs==NULL){
+		m->mhs=baru;
+	}else{
+		bantu=m->mhs;
+		while(bantu->next!=NULL) bantu=bantu->next;
+		bantu->next=baru;
+		baru->prev=bantu;
+	}
+}
+
 void addKls(int i,char name[],char kt[],char pas[],int index){
 	struct Kls *baru,*bantu;
 	bantu=&ada[index];
@@ -47,8 +48,8 @@ void addKls(int i,char name[],char kt[],char pas[],int index){
 	strcpy(baru->nam,name);
 	strcpy(baru->ket,kt);
 	strcpy(baru->pass,pas);
-//	baru->mhs=0;
-	baru->next=0;
+	baru->mhs=NULL;
+	baru->next=NULL;
 	bantu->next=baru;
 }
 
@@ -66,26 +67,6 @@ void openHash(int i,char name[],char kt[],char pas[]){
 		addKls(i,name,kt,pas,index);
 	}
 }
-//
-//void cari(int i,int ni,char name[],char kl){
-//	int index,mode=0;
-//	struct Kls *bantu;
-//	index=i%10;
-//	bantu=&ada[index];
-//	while(bantu!=0){
-//		if(bantu->id==i){	
-//			addMhs(ni,name,kl,bantu->mhs);
-//			mode++;
-//		}
-//		bantu=bantu->next;
-//	}
-//	if(mode==0){
-//		puts("Maaf, data tidak ditemukan");
-//		return;
-//	}else{
-//		puts("Data telah ditambahkan");
-//	}
-//}
 
 int cariTes(int i){
 	int index,mode=0;
