@@ -8,5 +8,8 @@
 #include <unistd.h>
 
 void checkDirect();
+int lineF(char file[]);
+int loginD(char u[],char p[]);
+void tes();
 
 #endif

@@ -10,6 +10,7 @@
 
 #define CETAK "./db_cetak/absen.txt"
 #define KLS "./db_kls/kelas.txt"
+#define LOG "./db_log/login.txt"
 
 struct List{
 	int nim;

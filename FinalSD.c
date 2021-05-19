@@ -10,13 +10,14 @@ void dosen();
 void editKls(struct Kls *bantu);
 void lihatKls(struct Kls *bantu);
 void cekId();
+void loginDosen();
 
 
 int main(){
 	int pil;
 	
 	checkDirect();
-//	isi();
+	tes();
 	
 	do{
 		system("cls");
@@ -72,8 +73,7 @@ void dosenSign(){
 		
 		switch(pil){
 			case 1:
-				
-				dosen();
+				loginDosen();
 				break;
 			case 2:
 					
@@ -109,7 +109,6 @@ void menuMhs(){
 		switch(pil){
 			case 1:
 				cekId(3);
-				lanjut=next(1);	
 				break;
 			case 2:
 				adaKls();
@@ -296,4 +295,31 @@ void cekId(int n){
 	temu=next(2);
 	if(temu==1) goto menu;
 	else return;
+}
+
+void loginDosen(){
+	char user[20],pass [20];
+	menu:
+	system("cls");
+	
+	latar();
+	printf("============================================================\n");
+	printf("                         SIGN IN\n");
+	printf("============================================================\n");
+	printf("-->Username : ");
+	fflush(stdin);
+	scanf("%[^\n]s",user);
+	printf("-->Password : ");
+	fflush(stdin);
+	scanf("%[^\n]s",pass);
+	int cek=loginD(user,pass);
+	if(cek==1){
+		printf("============================================================\n");
+		dosen();
+	}else{
+		printf("-->Maaf, username atau password salah\n");
+		printf("============================================================\n");
+		cek=next(2);
+		if(cek==1) goto menu;
+	}
 }
