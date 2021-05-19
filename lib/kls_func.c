@@ -85,7 +85,7 @@ void delKls(struct Kls *bantu){
 	if(index<0) index*=-1;
 	if(ada[index].id == bantu->id){
 		if(bantu->next!=NULL){
-			bantu->next=temp;
+			temp=bantu->next;
 			ada[index].id=temp->id;
 			strcpy(ada[index].nam,temp->nam);
 			strcpy(ada[index].ket,temp->ket);
@@ -97,23 +97,55 @@ void delKls(struct Kls *bantu){
 			strcpy(ada[index].nam,"");
 			strcpy(ada[index].ket,"");
 			strcpy(ada[index].pass,"");
-			ada[index].next=NULL;
 		}
 	}
 	else{
-		hapus=&ada[index];
-		while(hapus->id!=bantu->id && hapus!=NULL){
+		hapus=ada[index].next;
+		while((hapus->id!=bantu->id) && hapus!=NULL){
 			hapus=hapus->next;
 		}
 		if(hapus==NULL){
 			printf("Maaf, ID tidak ditemukan\n");
 			return;
 		}
+		temp=&ada[index];
 		while(temp->next!=hapus){
 			temp=temp->next;
 		}
 		buff=hapus->next;
 		temp->next=buff;
 		free(hapus);
+	}
+}
+
+void adaKls(){
+	struct Kls *bantu;
+	int i,status=0;
+	system("cls");
+	
+	latar();
+	printf("============================================================\n");
+	printf("                      KELAS TERSEDIA\n");
+	printf("============================================================\n");
+	for(i=0;i<10;i++){
+		bantu=ada[i].next;
+		if(ada[i].id!=0){
+			status++;
+			printf("-->ID Kelas   : %d\n",ada[i].id);
+			printf("-->Nama Kelas : %s\n",ada[i].nam);
+			printf("-->Keterangan : %s\n",ada[i].ket);
+			printf("============================================================\n");
+			while(bantu!=NULL){
+				printf("-->ID Kelas   : %d\n",bantu->id);
+				printf("-->Nama Kelas : %s\n",bantu->nam);
+				printf("-->Keterangan : %s\n",bantu->ket);
+				printf("============================================================\n");
+				bantu=bantu->next;
+			}
+		}
+	}
+	if(status==0){
+		printf("-->Tidak ada kelas tersedia\n");
+		printf("============================================================\n");
 	}
 }

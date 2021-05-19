@@ -6,4 +6,7 @@ void checkDirect(){
     if (stat("db_cetak", &st) == -1) {
         mkdir("db_cetak");
     }
+    if (stat("db_kls", &st) == -1) {
+        mkdir("db_kls");
+    }
 }

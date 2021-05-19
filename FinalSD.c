@@ -136,7 +136,8 @@ void dosen(){
 		printf("--> 1. Buat Kelas\n");
 		printf("--> 2. Edit dan Lihat Kelas\n");
 		printf("--> 3. Lihat Absensi Kelas\n");
-		printf("--> 4. Kembali\n");
+		printf("--> 4. Kelas yang Tersedia\n");
+		printf("--> 5. Kembali\n");
 		printf("============================================================\n");
 		printf("--> Pilih menu : ");
 		scanf("%d",&pil);
@@ -155,12 +156,16 @@ void dosen(){
 				cekId(2);
 				break;
 			case 4:
+				adaKls();
+				lanjut=next(1);
+				break;
+			case 5:
 				break;
 			default:
 				break;
 		}
 		
-	}while(pil!=4 && lanjut==1 );
+	}while(pil!=5 && lanjut==1 );
 }
 
 void editKls(struct Kls *bantu){

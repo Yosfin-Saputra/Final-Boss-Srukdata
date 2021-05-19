@@ -7,5 +7,6 @@ void buatKls();
 void viewKls(struct Kls *bantu);
 struct Kls *modifKls(struct Kls *bantu);
 void delKls(struct Kls *bantu);
+void adaKls();
 
 #endif

@@ -9,6 +9,7 @@
 #include <stddef.h>
 
 #define CETAK "./db_cetak/absen.txt"
+#define KLS "./db_kls/kelas.txt"
 
 //struct List{
 //	int nim;
