@@ -28,13 +28,13 @@ int lineF(char file[]){
 
 int loginD(char u[],char p[]){
 	FILE* file;
-	char user[20],pass[20];
-	int no,cekU,cekP,status=0;
+	char user[20],pass[20],name[30];
+	int no,cekU,cekP,nip,status=0;
 	
 	int line=lineF(LOG);
 	file=fopen(LOG,"r");
 	for(int i=0;i<line;i++){
-		fscanf(file,"%d,%[^,],%[^\n]",&no,user,pass);
+		fscanf(file,"%d,%[^,],%[^,],%[^,],%d",&no,user,pass,name,&nip);
 		cekU=strcmp(user,u);
 		cekP=strcmp(pass,p);
 		if(cekU=cekP==0){
@@ -50,8 +50,46 @@ int loginD(char u[],char p[]){
 void tes(){
 	FILE*file;
 	
-	file=fopen(LOG,"w");
+	
+	file=fopen(LOG,"w+");
 	int line=lineF(LOG);
-	fprintf(file,"1,admin,admin\n");
+	if(line==1) fprintf(file,"1,admin,admin,admin,1\n");
 	fclose(file);
+}
+
+int addD(char u[],char p[],char name[],int nip,int kode){
+	FILE*file,*find;
+	int no,nomor,cekU,status=1,mode=1;   //status=1 untuk status sign up berhasil
+	char user[20],pass[20],n[30];
+	
+	int line=lineF(LOG);
+	find=fopen(LOG,"r");
+	for(int i=0;i<line;i++){
+		fscanf(find,"%d,%[^,],%[^,],%[^,],%d",&no,user,pass,n,&nomor);
+		cekU=strcmp(user,u);
+		if(cekU==0){
+			status=0;
+			break;
+		}
+	}
+	fclose(find);
+	
+	file=fopen(LOG,"a+");
+	
+	if(kode==1001 && status!=0){
+		
+		kode=next(3);
+		if(kode==1){
+			fprintf(file,"%d,%s,%s,%s,%d\n",line+1,u,p,name,nip,kode);
+			mode=1;
+		}
+		
+	}
+	if(status==0) printf("-->Maaf, username anda telah terpakai\n");
+	else if(mode==0) printf("-->Maaf, kode salah\n");
+	
+	fclose(file);
+	
+	if(status==0||mode==0) return 0;
+	else return 1;
 }

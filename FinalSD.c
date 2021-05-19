@@ -11,6 +11,7 @@ void editKls(struct Kls *bantu);
 void lihatKls(struct Kls *bantu);
 void cekId();
 void loginDosen();
+void signUp();
 
 
 int main(){
@@ -76,7 +77,7 @@ void dosenSign(){
 				loginDosen();
 				break;
 			case 2:
-					
+				signUp();
 				break;
 			case 3:
 					
@@ -321,5 +322,37 @@ void loginDosen(){
 		printf("============================================================\n");
 		cek=next(2);
 		if(cek==1) goto menu;
+	}
+}
+
+void signUp(){
+	char user[20],pas[20],nam[30];
+	int ni,kod=10;
+	menu:
+	system("cls");
+	
+	latar();
+	printf("============================================================\n");
+	printf("                         SIGN IN\n");
+	printf("============================================================\n");
+	printf("-->Kode     : ");
+	scanf("%d",&kod);
+	printf("-->Username : ");
+	fflush(stdin);
+	scanf("%[^\n]s",user);
+	printf("-->Nama     : ");
+	fflush(stdin);
+	scanf("%[^\n]s",nam);
+	printf("-->NIP      : ");
+	scanf("%d",&ni);
+	printf("-->Password : ");
+	fflush(stdin);
+	scanf("%[^\n]s",pas);
+	printf("============================================================\n");
+	kod=addD(user,pas,nam,ni,kod);
+	printf("============================================================\n");
+	if(kod==0){                  //jika gagal, ditanya diulang?
+		kod=next(2);
+		if(kod==1) goto menu;
 	}
 }
