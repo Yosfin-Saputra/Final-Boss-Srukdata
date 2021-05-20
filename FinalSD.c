@@ -66,7 +66,8 @@ void dosenSign(){
 		printf("============================================================\n");
 		printf("--> 1. Sign In\n");
 		printf("--> 2. Sign Up\n");
-		printf("--> 3. Kembali\n");
+		printf("--> 3. Hapus Akun\n");
+		printf("--> 4. Kembali\n");
 		printf("============================================================\n");
 		printf("--> Pilih menu : ");
 		scanf("%d",&pil);
@@ -74,19 +75,21 @@ void dosenSign(){
 		
 		switch(pil){
 			case 1:
-				loginDosen();
+				loginDosen(1);
 				break;
 			case 2:
 				signUp();
 				break;
 			case 3:
-					
+				loginDosen(2);
+				break;
+			case 4:
 				break;
 			default:
 				break;
 		}
 		
-	}while(pil!=3);
+	}while(pil!=4);
 }
 
 void menuMhs(){
@@ -298,7 +301,7 @@ void cekId(int n){
 	else return;
 }
 
-void loginDosen(){
+void loginDosen(int n){
 	char user[20],pass [20];
 	menu:
 	system("cls");
@@ -315,8 +318,24 @@ void loginDosen(){
 	scanf("%[^\n]s",pass);
 	int cek=loginD(user,pass);
 	if(cek==1){
-		printf("============================================================\n");
-		dosen();
+		if(n==1){
+			printf("============================================================\n");
+			dosen();
+		}
+		else{
+			int cekU=strcmp(user,"admin");
+			int cekP=strcmp(pass,"admin");
+			
+			if(cekU=cekP==0){
+				printf("-->Maaf, akun admin tidak dapat dihapus\n");  //admin tidak boleh dihapus agar ada 1 akun login 
+				printf("============================================================\n");
+				cek=next(2);
+				if(cek==1) goto menu;
+			}else {
+				printf("============================================================\n");
+				hapus(user,pass);
+			}
+		}
 	}else{
 		printf("-->Maaf, username atau password salah\n");
 		printf("============================================================\n");
@@ -333,7 +352,7 @@ void signUp(){
 	
 	latar();
 	printf("============================================================\n");
-	printf("                         SIGN IN\n");
+	printf("                         SIGN UN\n");
 	printf("============================================================\n");
 	printf("-->Kode     : ");
 	scanf("%d",&kod);
@@ -356,3 +375,4 @@ void signUp(){
 		if(kod==1) goto menu;
 	}
 }
+

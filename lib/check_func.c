@@ -51,9 +51,9 @@ void tes(){
 	FILE*file;
 	
 	
-	file=fopen(LOG,"w+");
+	file=fopen(LOG,"w");
 	int line=lineF(LOG);
-	if(line==1) fprintf(file,"1,admin,admin,admin,1\n");
+	if(line==0) fprintf(file,"1,admin,admin,admin,1\n2,sipa,sipa,sipa,2\n");
 	fclose(file);
 }
 
@@ -80,7 +80,7 @@ int addD(char u[],char p[],char name[],int nip,int kode){
 		
 		kode=next(3);
 		if(kode==1){
-			fprintf(file,"%d,%s,%s,%s,%d\n",line+1,u,p,name,nip,kode);
+			fprintf(file,"%d,%s,%s,%s,%d\n",line+1,u,p,name,nip);
 			mode=1;
 		}
 		
@@ -92,4 +92,37 @@ int addD(char u[],char p[],char name[],int nip,int kode){
 	
 	if(status==0||mode==0) return 0;
 	else return 1;
+}
+
+void hapus(char u[],char p[]){
+	FILE*baca,*t;
+	int i,no,nomor,cekU,line;
+	char buffer[50];
+	
+	int lanjut=next(3);
+	if(lanjut==0){
+		return;
+	}
+	
+	line=lineF("./db_log/login.txt");
+	
+	baca=fopen(LOG,"r");
+	t=fopen(LOGT,"w");
+	
+	while(fgets(buffer,sizeof(buffer),baca)){
+		fprintf(t,"%s",buffer);
+	}
+	
+	fclose(baca);
+	fclose(t);
+	
+//	line=lineF(LOGT);
+//	baca=fopen(LOGT,"r");
+//	tuker=fopen(LOG,"w");
+//	for(i=0;i<line;i++){
+//		fscanf(baca,"%d,%[^,],%[^,],%[^,],%d",&no,user,pass,n,&nomor);
+//		fprintf(tuker,"%d,%s,%s,%s,%d\n",no,user,pass,n,nomor);
+//	}
+//	fclose(baca);
+//	fclose(tuker);
 }

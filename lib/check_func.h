@@ -12,5 +12,6 @@ int lineF(char file[]);
 int loginD(char u[],char p[]);
 void tes();
 int addD(char u[],char p[],char name[],int nip,int kode);
+void hapus(char u[],char p[]);
 
 #endif
