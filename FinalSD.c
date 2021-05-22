@@ -11,14 +11,13 @@ void editKls(struct Kls *bantu);
 void lihatKls(struct Kls *bantu);
 void cekId();
 void loginDosen();
-void signUp();
-
 
 int main(){
 	int pil;
 	
 	checkDirect();
 	tes();
+	loadKlsMhs();
 	
 	do{
 		system("cls");
@@ -43,7 +42,7 @@ int main(){
 				menuMhs();
 				break;
 			case 3:
-				
+				saveKlsMhs();
 				break;
 			default:
 				break;
@@ -65,9 +64,7 @@ void dosenSign(){
 		printf("                      MENU DOSEN\n");
 		printf("============================================================\n");
 		printf("--> 1. Sign In\n");
-		printf("--> 2. Sign Up\n");
-		printf("--> 3. Hapus Akun\n");
-		printf("--> 4. Kembali\n");
+		printf("--> 2. Kembali\n");
 		printf("============================================================\n");
 		printf("--> Pilih menu : ");
 		scanf("%d",&pil);
@@ -78,18 +75,12 @@ void dosenSign(){
 				loginDosen(1);
 				break;
 			case 2:
-				signUp();
-				break;
-			case 3:
-				loginDosen(2);
-				break;
-			case 4:
 				break;
 			default:
 				break;
 		}
 		
-	}while(pil!=4);
+	}while(pil!=2);
 }
 
 void menuMhs(){
@@ -186,7 +177,7 @@ void editKls(struct Kls *bantu){
 		printf("                 EDIT DAN LIHAT KELAS\n");
 		printf("============================================================\n");
 		printf("--> 1. Edit Kelas\n");
-		printf("--> 2. Lihat Tampilan Kelas\n");
+		printf("--> 2. Data Kelas Sekarang\n");
 		printf("--> 3. Hapus Kelas\n");
 		printf("--> 4. Kembali\n");
 		printf("============================================================\n");
@@ -196,7 +187,10 @@ void editKls(struct Kls *bantu){
 		
 		switch(pil){
 			case 1:
-				bantu=modifKls(bantu);
+				printf("Anda yakin? (Absensi kelas ini akan terhapus)\n y/t : ");
+				fflush(stdin);
+				scanf("%c",&pil);
+				if(pil=='y') bantu=modifKls(bantu);
 				break;
 			case 2:
 				viewKls(bantu);
@@ -245,11 +239,12 @@ void lihatKls(struct Kls *bantu){
 				lanjut=next(1);
 				break;
 			case 2:
-					
+				modifAbsen(bantu);
+				lanjut=next(1);
 				break;
 			case 3:
-				
-				lanjut=next(1);
+				lanjut=next(3);
+				if(lanjut==1) cetakAbsen(bantu);
 				break;
 			case 4:
 				break;
@@ -261,8 +256,8 @@ void lihatKls(struct Kls *bantu){
 }
 
 void cekId(int n){
-	int a,temu;
-	char pass[20];
+	int a,temu,cek;
+	char pas[20];
 	struct Kls *bantu;
 	menu:
 	system("cls");
@@ -273,27 +268,25 @@ void cekId(int n){
 	printf("============================================================\n");
 	printf("-->ID Kelas : ");   
 	scanf("%d",&a);
+	printf("-->Password : ");
+	fflush(stdin);
+	scanf("%[^\n]s",pas);
 	temu=cariTes(a);
 	if(temu==1){
-		printf("-->Password : ");
-		fflush(stdin);
-		scanf("%[^\n]s",pass);
 		bantu=cariKls(a);
-		temu=strcmp(pass,bantu->pass);
-		
-		if(temu==0){
+		cek=strcmp(bantu->pass,pas);
+		if(cek==0){
 			printf("============================================================\n");
 			if(n==1) editKls(bantu);
 			else if(n==2) lihatKls(bantu);
 			else absenMhs(bantu);
 			return;
 		}else{
-			printf("-->Maaf, password salah\n");
+			printf("-->Maaf, ID atau password salah\n");
 			printf("============================================================\n");
 		}
-		
 	}else{
-		printf("-->Maaf, ID tidak ditemukan\n");
+		printf("-->Maaf, ID atau password salah\n");
 		printf("============================================================\n");
 	}
 	temu=next(2);
@@ -301,7 +294,7 @@ void cekId(int n){
 	else return;
 }
 
-void loginDosen(int n){
+void loginDosen(){
 	char user[20],pass [20];
 	menu:
 	system("cls");
@@ -318,24 +311,8 @@ void loginDosen(int n){
 	scanf("%[^\n]s",pass);
 	int cek=loginD(user,pass);
 	if(cek==1){
-		if(n==1){
-			printf("============================================================\n");
-			dosen();
-		}
-		else{
-			int cekU=strcmp(user,"admin");
-			int cekP=strcmp(pass,"admin");
-			
-			if(cekU=cekP==0){
-				printf("-->Maaf, akun admin tidak dapat dihapus\n");  //admin tidak boleh dihapus agar ada 1 akun login 
-				printf("============================================================\n");
-				cek=next(2);
-				if(cek==1) goto menu;
-			}else {
-				printf("============================================================\n");
-				hapus(user,pass);
-			}
-		}
+		printf("============================================================\n");
+		dosen();
 	}else{
 		printf("-->Maaf, username atau password salah\n");
 		printf("============================================================\n");
@@ -343,36 +320,3 @@ void loginDosen(int n){
 		if(cek==1) goto menu;
 	}
 }
-
-void signUp(){
-	char user[20],pas[20],nam[30];
-	int ni,kod=10;
-	menu:
-	system("cls");
-	
-	latar();
-	printf("============================================================\n");
-	printf("                         SIGN UN\n");
-	printf("============================================================\n");
-	printf("-->Kode     : ");
-	scanf("%d",&kod);
-	printf("-->Username : ");
-	fflush(stdin);
-	scanf("%[^\n]s",user);
-	printf("-->Nama     : ");
-	fflush(stdin);
-	scanf("%[^\n]s",nam);
-	printf("-->NIP      : ");
-	scanf("%d",&ni);
-	printf("-->Password : ");
-	fflush(stdin);
-	scanf("%[^\n]s",pas);
-	printf("============================================================\n");
-	kod=addD(user,pas,nam,ni,kod);
-	printf("============================================================\n");
-	if(kod==0){                  //jika gagal, ditanya diulang?
-		kod=next(2);
-		if(kod==1) goto menu;
-	}
-}
-

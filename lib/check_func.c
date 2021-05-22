@@ -14,115 +14,105 @@ void checkDirect(){
     }
 }
 
-int lineF(char file[]){
-	int i,line;
-	FILE*hitung;
-	hitung=fopen(file,"r");
-	while(!feof(hitung)){
-		i=fgetc(hitung);
-		if(i=='\n') line++;
-	}
-	fclose(hitung);
-	return line;
-}
-
 int loginD(char u[],char p[]){
 	FILE* file;
 	char user[20],pass[20],name[30];
 	int no,cekU,cekP,nip,status=0;
 	
-	int line=lineF(LOG);
+	int line=barisF(LOG);
 	file=fopen(LOG,"r");
 	for(int i=0;i<line;i++){
 		fscanf(file,"%d,%[^,],%[^,],%[^,],%d",&no,user,pass,name,&nip);
 		cekU=strcmp(user,u);
 		cekP=strcmp(pass,p);
-		if(cekU=cekP==0){
-			status++;
+		if(cekU==0 && cekP==0){
+			status=1;
 			break;
 		}
 	}
 	fclose(file);
-	if(status!=0) return 1;
+	if(status==1) return 1;
 	else return 0;
 }
 
 void tes(){
-	FILE*file;
-	
+	FILE*file,*buka;
 	
 	file=fopen(LOG,"w");
-	int line=lineF(LOG);
-	if(line==0) fprintf(file,"1,admin,admin,admin,1\n2,sipa,sipa,sipa,2\n");
-	fclose(file);
-}
-
-int addD(char u[],char p[],char name[],int nip,int kode){
-	FILE*file,*find;
-	int no,nomor,cekU,status=1,mode=1;   //status=1 untuk status sign up berhasil
-	char user[20],pass[20],n[30];
+	int line=barisF(LOG);
+	if(line==0) fprintf(file,"1,admin,admin,admin,1\n");
 	
-	int line=lineF(LOG);
-	find=fopen(LOG,"r");
-	for(int i=0;i<line;i++){
-		fscanf(find,"%d,%[^,],%[^,],%[^,],%d",&no,user,pass,n,&nomor);
-		cekU=strcmp(user,u);
-		if(cekU==0){
-			status=0;
-			break;
-		}
-	}
-	fclose(find);
-	
-	file=fopen(LOG,"a+");
-	
-	if(kode==1001 && status!=0){
-		
-		kode=next(3);
-		if(kode==1){
-			fprintf(file,"%d,%s,%s,%s,%d\n",line+1,u,p,name,nip);
-			mode=1;
-		}
-		
-	}
-	if(status==0) printf("-->Maaf, username anda telah terpakai\n");
-	else if(mode==0) printf("-->Maaf, kode salah\n");
+	buka=fopen(KLS,"a+");
+	buka=fopen(MHS,"a+");
 	
 	fclose(file);
-	
-	if(status==0||mode==0) return 0;
-	else return 1;
+	fclose(buka);
 }
 
-void hapus(char u[],char p[]){
-	FILE*baca,*t;
-	int i,no,nomor,cekU,line;
-	char buffer[50];
-	
-	int lanjut=next(3);
-	if(lanjut==0){
-		return;
+void saveKlsMhs(){
+	struct Kls *bantu;
+	struct List *siswa;
+	int i;
+	FILE *file,*cek;
+	file=fopen(KLS,"w");
+	cek=fopen(MHS,"w");
+	for(i=0;i<10;i++){
+		if(ada[i].id!=0){
+			bantu=&ada[i];
+			siswa=bantu->mhs;
+			while(bantu!=NULL){
+				fprintf(file,"%d,%s,%s,%s\n",bantu->id,bantu->nam,bantu->ket,bantu->pass);
+				while(siswa!=NULL){
+					fprintf(cek,"%d,%d,%s,%c\n",bantu->id,siswa->nim,siswa->nama,siswa->kls);
+					siswa=siswa->next;
+				}
+				bantu=bantu->next;
+			}
+		}
 	}
-	
-	line=lineF("./db_log/login.txt");
-	
-	baca=fopen(LOG,"r");
-	t=fopen(LOGT,"w");
-	
-	while(fgets(buffer,sizeof(buffer),baca)){
-		fprintf(t,"%s",buffer);
-	}
-	
-	fclose(baca);
-	fclose(t);
-	
-//	line=lineF(LOGT);
-//	baca=fopen(LOGT,"r");
-//	tuker=fopen(LOG,"w");
-//	for(i=0;i<line;i++){
-//		fscanf(baca,"%d,%[^,],%[^,],%[^,],%d",&no,user,pass,n,&nomor);
-//		fprintf(tuker,"%d,%s,%s,%s,%d\n",no,user,pass,n,nomor);
-//	}
-//	fclose(baca);
-//	fclose(tuker);
+	fclose(file);
+	fclose(cek);
 }
+
+int barisF(char file[]){
+	char buffer[255];
+	FILE*tes;
+	int i=-1;
+	tes=fopen(file,"r");
+	while(!feof(tes)){
+		fgets(buffer,sizeof(buffer),tes);
+		i++;
+	}
+	fclose(tes);
+	return i;
+}
+
+void loadKlsMhs(){
+	int i,line1,line2,d;
+	struct Kls k;
+	struct Kls *bantu;
+	struct List m;
+	line1=barisF(KLS);
+	line2=barisF(MHS);
+	
+	FILE *file,*cek;
+	file=fopen(KLS,"r");
+	cek=fopen(MHS,"r");
+	if(line1!=0){
+		for(i=0;i<line1;i++){
+			fscanf(file,"%d,%[^,],%[^,],%[^\n]",&k.id,k.nam,k.ket,k.pass);
+			openHash(k.id,k.nam,k.ket,k.pass);
+		}
+	}
+	if(line2!=0){
+		for(i=0;i<line2;i++){
+			fscanf(cek,"%d,%d,%[^,],%c",&d,&m.nim,m.nama,&m.kls);
+			bantu=cariKls(d);
+			addMhs(m.nama,m.nim,m.kls,bantu);
+		}
+	}
+	
+	fclose(file);
+	fclose(cek);
+}
+

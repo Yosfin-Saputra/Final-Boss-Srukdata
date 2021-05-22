@@ -5,5 +5,7 @@
 
 void absenMhs(struct Kls *bantu);
 void lihatAbsen(struct List *bantu);
+void cetakAbsen(struct Kls *bantu);
+void modifAbsen(struct Kls *bantu);
 
 #endif

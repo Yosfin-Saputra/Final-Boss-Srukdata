@@ -2,7 +2,7 @@
 
 void buatKls(){
 	struct Kls a;
-	int temu;
+	int nilai,i=1,cek;
 	menu:
 	system("cls");
 	
@@ -10,16 +10,17 @@ void buatKls(){
 	printf("============================================================\n");
 	printf("                      BUAT KELAS\n");
 	printf("============================================================\n");
-	printf("-->ID Kelas   : ");
-	scanf("%d",&a.id);
-	temu=cariTes(a.id);
-	if(temu==1){
-		printf("-->Maaf, ID sudah digunakan\n");
-		printf("============================================================\n");
-		temu=next(2);
-		if(temu==1) goto menu;
-		else return;
+	a.id=0;
+	while(a.id==0){
+		nilai=i;
+		cek=cariTes(nilai);
+		if(cek==1){
+			i++;
+		}else{
+			a.id=i;
+		}
 	}
+	printf("-->ID Kelas   : %d\n",a.id);
 	printf("-->Nama Kelas : ");
 	fflush(stdin);
 	scanf("%[^\n]s",a.nam);
@@ -97,6 +98,7 @@ void delKls(struct Kls *bantu){
 			strcpy(ada[index].nam,"");
 			strcpy(ada[index].ket,"");
 			strcpy(ada[index].pass,"");
+			ada[index].mhs=NULL;
 		}
 	}
 	else{

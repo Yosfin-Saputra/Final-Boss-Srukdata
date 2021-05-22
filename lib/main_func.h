@@ -11,7 +11,7 @@
 #define CETAK "./db_cetak/absen.txt"
 #define KLS "./db_kls/kelas.txt"
 #define LOG "./db_log/login.txt"
-#define LOGT "./db_log/tukar.txt"
+#define MHS "./db_kls/mhs.txt"
 
 struct List{
 	int nim;
