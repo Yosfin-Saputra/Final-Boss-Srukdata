@@ -48,9 +48,24 @@ void lihatAbsen(struct List *bantu){
 void cetakAbsen(struct Kls *bantu){
 	struct List *cek;
 	FILE*file;
+	char buffer[255];
 	int status=0,total=0;
 	
-	file=fopen("./db_cetak/kelas.txt","w");
+	struct tm *waktu;
+	time_t pukul;
+	time(&pukul);
+	waktu=localtime(&pukul);
+	
+	char namaFile[]="./db_cetak/waktu.txt";
+	file=fopen(namaFile,"w");
+	fprintf(file,"./db_cetak/%s %02d-%02d-%d.txt",bantu->nam, waktu->tm_mday, waktu->tm_mon + 1, waktu->tm_year + 1900);
+	fclose(file);
+	
+	file=fopen(namaFile,"r");
+	fgets(buffer,sizeof(buffer),file);
+	fclose(file);
+	
+	file=fopen(buffer,"w");
 	cek=bantu->mhs;
 	
 	fprintf(file,"============================================================\n");
@@ -77,9 +92,7 @@ void cetakAbsen(struct Kls *bantu){
 	fprintf(file,"+---------------+----------------------------------+-------+\n");
 	fprintf(file,"============================================================\n");
 	
-	
 	fclose(file);
-	delKls(bantu);
 }
 
 void modifAbsen(struct Kls *bantu){
@@ -128,3 +141,26 @@ void modifAbsen(struct Kls *bantu){
 	}
 	
 }
+
+//char namaAbsen(char kelas){
+//	char buffer[255];
+//	char direct[]="./db_cetak/";
+//	FILE *file;
+//	struct tm *waktu;
+//	time_t pukul;
+//	time(&pukul);
+//	waktu=localtime(&pukul);
+//	
+//	char namaFile[]="./db_cetak/waktu.txt";
+//	file=fopen(namaFile,"w");
+//	fprintf(file," %02d/%02d/%d %02d:%02d:%02d.txt", waktu->tm_mday, waktu->tm_mon + 1, waktu->tm_year + 1900, waktu->tm_hour, waktu->tm_min, waktu->tm_sec);
+//	fclose(file);
+//	
+//	file=fopen(namaFile,"r");
+//	fgets(buffer,sizeof(buffer),file);
+//	fclose(file);
+//	
+//	strcat(kelas,buffer);
+////	strcat(direct,kelas);
+//	return direct;
+//}
