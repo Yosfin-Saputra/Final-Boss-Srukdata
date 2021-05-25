@@ -57,9 +57,8 @@ struct Kls *modifKls(struct Kls *bantu){
 	printf("============================================================\n");
 	printf("                 EDIT DAN LIHAT KELAS\n");
 	printf("============================================================\n");
-	printf("-->ID Kls Lama   : %d\n",bantu->id);
-	printf("-->ID Kls Baru   : ");
-	scanf("%d",&a.id);
+	printf("-->ID Kelas      : %d\n",bantu->id);
+	a.id=bantu->id;
 	printf("-->Pass Lama     : %s\n",bantu->pass);
 	printf("-->Pass Baru     : ");
 	fflush(stdin);
@@ -73,8 +72,8 @@ struct Kls *modifKls(struct Kls *bantu){
 	fflush(stdin);
 	scanf("%[^\n]s",a.ket);
 	printf("============================================================\n");
-	openHash(a.id,a.nam,a.ket,a.pass);
 	delKls(bantu);
+	openHash(a.id,a.nam,a.ket,a.pass);
 	s=cariKls(a.id);
 	return s;
 }

@@ -58,7 +58,7 @@ void cetakAbsen(struct Kls *bantu){
 	
 	char namaFile[]="./db_cetak/waktu.txt";
 	file=fopen(namaFile,"w");
-	fprintf(file,"./db_cetak/%s %02d-%02d-%d.txt",bantu->nam, waktu->tm_mday, waktu->tm_mon + 1, waktu->tm_year + 1900);
+	fprintf(file,"./db_cetak/%s %02d-%02d-%d %02d.%02d.%02d.txt",bantu->nam, waktu->tm_mday, waktu->tm_mon + 1, waktu->tm_year + 1900,waktu->tm_hour ,waktu->tm_min ,waktu->tm_sec);
 	fclose(file);
 	
 	file=fopen(namaFile,"r");
@@ -81,6 +81,7 @@ void cetakAbsen(struct Kls *bantu){
 	fprintf(file,"+---------------+----------------------------------+-------+\n");
 	while(cek!=NULL){
 		status++;
+		total++;
 		fprintf(file,"|  %-11d  | %-32s |   %c   |\n",cek->nim,cek->nama,cek->kls);
 		cek=cek->next;
 	}
@@ -97,7 +98,7 @@ void cetakAbsen(struct Kls *bantu){
 
 void modifAbsen(struct Kls *bantu){
 	struct List *cek,*head,*depan,*blkng;
-	int pil,status=0;
+	int pil,status=1;
 	
 	lihatAbsen(bantu->mhs);
 	
@@ -112,7 +113,7 @@ void modifAbsen(struct Kls *bantu){
 	head=cek;
 	while(status!=0){
 		if(cek->nim==pil){
-			status=1;
+			status=0;
 			if(cek==head){
 				if(cek->next!=NULL){
 					head=head->next;
@@ -141,26 +142,3 @@ void modifAbsen(struct Kls *bantu){
 	}
 	
 }
-
-//char namaAbsen(char kelas){
-//	char buffer[255];
-//	char direct[]="./db_cetak/";
-//	FILE *file;
-//	struct tm *waktu;
-//	time_t pukul;
-//	time(&pukul);
-//	waktu=localtime(&pukul);
-//	
-//	char namaFile[]="./db_cetak/waktu.txt";
-//	file=fopen(namaFile,"w");
-//	fprintf(file," %02d/%02d/%d %02d:%02d:%02d.txt", waktu->tm_mday, waktu->tm_mon + 1, waktu->tm_year + 1900, waktu->tm_hour, waktu->tm_min, waktu->tm_sec);
-//	fclose(file);
-//	
-//	file=fopen(namaFile,"r");
-//	fgets(buffer,sizeof(buffer),file);
-//	fclose(file);
-//	
-//	strcat(kelas,buffer);
-////	strcat(direct,kelas);
-//	return direct;
-//}

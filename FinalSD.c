@@ -187,7 +187,8 @@ void editKls(struct Kls *bantu){
 		
 		switch(pil){
 			case 1:
-				printf("Anda yakin? (Absensi kelas ini akan terhapus)\n y/t : ");
+				printf("Peringatan : Jika terdapat absensi kelas, maka akan terhapus\n");
+				printf("Anda yakin? y/t : ");
 				fflush(stdin);
 				scanf("%c",&pil);
 				if(pil=='y') bantu=modifKls(bantu);
